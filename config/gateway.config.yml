@@ -1,0 +1,80 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  user:
+    paths: /users/*
+  razorpay:
+    paths: /payments/*
+  product:
+    paths: /products/*
+  invoice:
+    paths: /invoices/*
+  customerCare:
+    paths: /chat/*
+serviceEndpoints:
+  user-service:
+    url: http://localhost:3004
+  razorpay-service:
+    url: http://localhost:3003
+  product-service:
+    url: http://localhost:3002
+  invoice-service:
+    url: http://localhost:3001
+  customerCare-service:
+    url: http://localhost:3000
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  userPipeline:
+    apiEndpoints:
+      - user
+      - razorpay
+      - product
+      - invoice
+      - customerCare
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: user-service
+
+  razorpayPipeline:
+    apiEndpoints:
+      - razorpay
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: razorpay-service
+
+  productPipeline:
+    apiEndpoints:
+      - product
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: product-service
+
+  invoicePipeline:
+    apiEndpoints:
+      - invoice
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: invoice-service
+
+  customerCarePipeline:
+    apiEndpoints:
+      - customerCare
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: customerCare-service
