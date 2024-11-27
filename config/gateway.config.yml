@@ -1,8 +1,8 @@
 http:
-  port: 8080
+  port: ${PORT}
 admin:
-  port: 9876
-  host: localhost
+  port: ${ADMINPORT}
+  host: ${ADMINHOST}
 apiEndpoints:
   user:
     paths: /users/*
@@ -16,15 +16,15 @@ apiEndpoints:
     paths: /chat/*
 serviceEndpoints:
   user-service:
-    url: http://localhost:3004
+    url: ${USER_SERVICE_URL}
   razorpay-service:
-    url: http://localhost:3003
+    url: ${RAZORPAY_SERVICE_URL}
   product-service:
-    url: http://localhost:3002
+    url: ${PRODUCT_SERVICE_URL}
   invoice-service:
-    url: http://localhost:3001
+    url: ${INVOICE_SERVICE_URL}
   customerCare-service:
-    url: http://localhost:3000
+    url: ${CUSTOMERCARE_SERVICE_URL}
 policies:
   - basic-auth
   - cors
